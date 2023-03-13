@@ -18,9 +18,8 @@ const SearchSideBar = ({
         <h1 className="mb-2 font-semibold">Region</h1>
         {locations.map((inst) => {
           return (
-            <div>
+            <div key={inst.id}>
               <Link
-                key={inst.id}
                 href={{
                   pathname: "/search",
                   query: {
@@ -42,9 +41,8 @@ const SearchSideBar = ({
         <h1 className="mb-2 font-semibold">Cuisine</h1>
         {cuisines.map((inst) => {
           return (
-            <div>
+            <div key={inst.id}>
               <Link
-                key={inst.id}
                 href={{
                   pathname: "/search",
                   query: {

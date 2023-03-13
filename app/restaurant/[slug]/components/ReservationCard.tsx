@@ -129,14 +129,14 @@ const ReservationCard = ({ open_time, close_time, slug }: { open_time: string; c
           <div className="flex flex-wrap mt-2">
             {data.map((inst) =>
               inst.available ? (
-                <Link
+                <Link key={shortid.generate()}
                   href={`/reserve/${slug}?date=${day}T${inst.time}&partySize=${partySize}`}
                   className="bg-blue-700 hover:bg-blue-800 cursor-pointer p-2 text-center text-white mb-3 rounded mr-3 w-24"
                 >
                   <p className="text-sm font-bold">{convertToDisplayTime(inst.time)}</p>
                 </Link>
               ) : (
-                <div className="bg-gray-400 p-2 text-center text-white mb-3 rounded mr-3 w-24">Unavailable</div>
+                <div key={shortid.generate()} className="bg-gray-400 p-2 text-center text-white mb-3 rounded mr-3 w-24">Unavailable</div>
               )
             )}
           </div>
