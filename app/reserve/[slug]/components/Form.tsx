@@ -17,9 +17,18 @@ const Form = ({ slug, date, partySize }: { slug: string; date: string; partySize
   const [input, setInput] = useState(defaultFormFields);
   const [isDisabled, setIsDisabled] = useState(true);
   const [didBook, setDidBook] = useState(false);
-  const [day, time] = date.split("T");
   const { loading, error, createReservation } = useReservation();
   const { data } = useContext(AuthenticationContext);
+
+  let day = "";
+  let time = "";
+
+  if (typeof date === "string") {
+    day = date.split("T")[0];
+    time = date.split("T")[1];
+  } else {
+    return <div>Something went wrong with the date</div>;
+  }
 
   useEffect(() => {
     setInput((prev) => {
@@ -33,8 +42,8 @@ const Form = ({ slug, date, partySize }: { slug: string; date: string; partySize
         };
       }
       return prev;
-    })
-  }, [data])
+    });
+  }, [data]);
 
   useEffect(() => {
     if (input.bookerFirstName && input.bookerLastName && input.bookerPhone && input.bookerEmail) {

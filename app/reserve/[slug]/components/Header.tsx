@@ -3,7 +3,15 @@ import React from "react";
 import { format } from "date-fns";
 
 const Header = ({ image, name, date, partySize }: { image: string; name: string; date: string; partySize: string }) => {
-  const [day, time] = date.split("T");
+  let day = "";
+  let time = "";
+
+  if (typeof date === "string") {
+    day = date.split("T")[0];
+    time = date.split("T")[1];
+  } else {
+    return <div>Something went wrong with the date</div>;
+  }
 
   return (
     <div className="flex w-[95%] items-center m-3 bg-white border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">

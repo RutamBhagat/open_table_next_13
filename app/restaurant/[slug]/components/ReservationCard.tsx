@@ -19,7 +19,7 @@ const ReservationCard = ({ open_time, close_time, slug }: { open_time: string; c
     if (time.time === open_time) {
       isWithinTimeWindow = true;
     } else if (time.time === close_time) {
-      isWithinTimeWindow = false;
+      isWithinTimeWindow = false; 
     }
     return isWithinTimeWindow;
   });
