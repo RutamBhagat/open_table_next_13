@@ -1,16 +1,24 @@
 import ErrorComponent from "@/app/restaurant/[slug]/components/ErrorComponent";
 import { PrismaClient } from "@prisma/client";
-import { notFound } from "next/navigation";
 import React from "react";
 import Form from "./components/Form";
 import Header from "./components/Header";
 
 const prisma = new PrismaClient();
 
-const fetchRestaurantsBySlug = async (slug: string) => {
+export default async function ({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams: {
+    date: string;
+    partySize: string;
+  };
+}) {
   const restaurant = await prisma.restaurant.findUnique({
     where: {
-      slug,
+      slug: params.slug,
     },
     select: {
       id: true,
@@ -20,26 +28,7 @@ const fetchRestaurantsBySlug = async (slug: string) => {
   });
 
   if (!restaurant) {
-    return notFound();
-  }
-
-  return restaurant;
-};
-
-const Slug = async ({
-  params,
-  searchParams,
-}: {
-  params: { slug: string };
-  searchParams: {
-    date: string;
-    partySize: string;
-  };
-}) => {
-  const restaurant = await fetchRestaurantsBySlug(params.slug);
-
-  if(!restaurant){
-    return <ErrorComponent message="Restaurant not found" />
+    return <ErrorComponent message="Restaurant not found" />;
   }
 
   return (
@@ -57,6 +46,4 @@ const Slug = async ({
       </div>
     </div>
   );
-};
-
-export default Slug;
+}
