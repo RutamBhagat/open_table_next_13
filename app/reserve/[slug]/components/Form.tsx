@@ -1,8 +1,8 @@
 "use client";
 import ErrorComponent from "@/app/restaurant/[slug]/components/ErrorComponent";
 import useReservation from "@/hooks/useReservation";
-import React, { type ChangeEvent, type FormEvent, useEffect, useState } from "react";
-// import { AuthenticationContext } from "@/app/context/AuthContext";
+import React, { type ChangeEvent, type FormEvent, useEffect, useState, useContext } from "react";
+import { AuthenticationContext } from "@/app/context/AuthContext";
 
 const defaultFormFields = {
   bookerFirstName: "",
@@ -19,22 +19,22 @@ const Form = ({ slug, date, partySize }: { slug: string; date: string; partySize
   const [didBook, setDidBook] = useState(false);
   const [day, time] = date.split("T");
   const { loading, error, createReservation } = useReservation();
-  // const { data } = useContext(AuthenticationContext);
+  const { data } = useContext(AuthenticationContext);
 
-  // useEffect(() => {
-  //   setInput((prev) => {
-  //     if (data) {
-  //       return {
-  //         ...prev,
-  //         bookerFirstName: data.firstName,
-  //         bookerLastName: data.lastName,
-  //         bookerPhone: data.phone,
-  //         bookerEmail: data.email,
-  //       };
-  //     }
-  //     return prev;
-  //   })
-  // }, [data])
+  useEffect(() => {
+    setInput((prev) => {
+      if (data) {
+        return {
+          ...prev,
+          bookerFirstName: data.firstName,
+          bookerLastName: data.lastName,
+          bookerPhone: data.phone,
+          bookerEmail: data.email,
+        };
+      }
+      return prev;
+    })
+  }, [data])
 
   useEffect(() => {
     if (input.bookerFirstName && input.bookerLastName && input.bookerPhone && input.bookerEmail) {

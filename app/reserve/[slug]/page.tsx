@@ -1,3 +1,4 @@
+import ErrorComponent from "@/app/restaurant/[slug]/components/ErrorComponent";
 import { PrismaClient } from "@prisma/client";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -19,7 +20,7 @@ const fetchRestaurantsBySlug = async (slug: string) => {
   });
 
   if (!restaurant) {
-    notFound();
+    return notFound();
   }
 
   return restaurant;
@@ -36,6 +37,10 @@ const Slug = async ({
   };
 }) => {
   const restaurant = await fetchRestaurantsBySlug(params.slug);
+
+  if(!restaurant){
+    return <ErrorComponent message="Restaurant not found" />
+  }
 
   return (
     <div className="min-h-screen py-10">
